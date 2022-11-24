@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="log4j.properties">
+
+    </properties>
+    <!--    <settings>-->
+    <!--        <setting name="logImpl" value="LOG4J2"/>-->
+    <!--    </settings>-->
+    <!-- 实体类的别名 -->
+    <typeAliases>
+        <typeAlias type="com.ifywork.ifywork_ssm.bean.Website" alias="Website"/>
+        <typeAlias type="com.ifywork.ifywork_ssm.bean.Student" alias="Student"/>
+        <typeAlias type="com.ifywork.ifywork_ssm.bean.StudentCard" alias="StudentCard"/>
+        <typeAlias type="com.ifywork.ifywork_ssm.bean.Drug" alias="Drug"/>
+
+    </typeAliases>
+    <!-- mybatis运行环境管理，可以配置多个环境，默认是default="development" -->
+    <environments default="development">
+        <environment id="development">
+            <!-- 使用JDBC的事务管理 -->
+            <transactionManager type="JDBC"/>
+            <!-- 数据源 type="POOLED"表示使用连接池 -->
+            <dataSource type="POOLED">
+                <!-- MySQL数据库驱动 -->
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <!-- 连接数据库的URL -->
+                <property name="url"
+                          value="jdbc:mysql://localhost:3306/dbshow?useSSL=false&amp;characterEncoding=utf8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 映射文件路径，将mapper文件加入到配置文件中 -->
+    <mappers>
+        <mapper resource="mapper/WebsiteMapper.xml"/>
+        <mapper resource="mapper/StudentMapper.xml"/>
+        <mapper resource="mapper/StudentCardMapper.xml"/>
+        <mapper resource="mapper/DrugMapper.xml"/>
+        <mapper class="com.ifywork.ifywork_ssm.dao.SymDao"/>
+    </mappers>
+</configuration>
