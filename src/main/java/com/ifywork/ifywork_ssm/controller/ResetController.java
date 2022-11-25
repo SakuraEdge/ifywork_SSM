@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @ComponentScan
 @Controller
 public class ResetController {
-    @RequestMapping("/PaperAddServlet")
+    @RequestMapping("/ResetPwdServlet")
     public void ResetPwd(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //设置传值的编码
         response.setContentType("text/html;charset=UTF-8");
