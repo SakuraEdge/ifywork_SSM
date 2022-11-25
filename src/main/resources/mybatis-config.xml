@@ -10,10 +10,11 @@
     <!--    </settings>-->
     <!-- 实体类的别名 -->
     <typeAliases>
-        <typeAlias type="com.ifywork.ifywork_ssm.bean.Website" alias="Website"/>
-        <typeAlias type="com.ifywork.ifywork_ssm.bean.Student" alias="Student"/>
-        <typeAlias type="com.ifywork.ifywork_ssm.bean.StudentCard" alias="StudentCard"/>
-        <typeAlias type="com.ifywork.ifywork_ssm.bean.Drug" alias="Drug"/>
+        
+<!--        <typeAlias type="com.ifywork.ifywork_ssm.bean.Website" alias="Website"/>-->
+<!--        <typeAlias type="com.ifywork.ifywork_ssm.bean.Student" alias="Student"/>-->
+<!--        <typeAlias type="com.ifywork.ifywork_ssm.bean.StudentCard" alias="StudentCard"/>-->
+<!--        <typeAlias type="com.ifywork.ifywork_ssm.bean.Drug" alias="Drug"/>-->
 
     </typeAliases>
     <!-- mybatis运行环境管理，可以配置多个环境，默认是default="development" -->
@@ -27,7 +28,7 @@
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
                 <!-- 连接数据库的URL -->
                 <property name="url"
-                          value="jdbc:mysql://localhost:3306/dbshow?useSSL=false&amp;characterEncoding=utf8"/>
+                          value="jdbc:mysql://localhost:3306/system?useSSL=false&amp;characterEncoding=utf8"/>
                 <property name="username" value="root"/>
                 <property name="password" value="123456"/>
             </dataSource>
@@ -36,10 +37,8 @@
 
     <!-- 映射文件路径，将mapper文件加入到配置文件中 -->
     <mappers>
-        <mapper resource="mapper/WebsiteMapper.xml"/>
-        <mapper resource="mapper/StudentMapper.xml"/>
-        <mapper resource="mapper/StudentCardMapper.xml"/>
-        <mapper resource="mapper/DrugMapper.xml"/>
+        <mapper class="com.ifywork.ifywork_ssm.dao.LoginDao"/>
         <mapper class="com.ifywork.ifywork_ssm.dao.SymDao"/>
+        <mapper class="com.ifywork.ifywork_ssm.dao.HomeDao"/>
     </mappers>
 </configuration>

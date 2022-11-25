@@ -1,7 +1,6 @@
 package com.ifywork.ifywork_ssm.dao;
 
 import com.ifywork.ifywork_ssm.bean.Sym;
-import com.ifywork.ifywork_ssm.bean.Website;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -21,7 +20,6 @@ public interface SymDao {
      * 查询单条记录
      */
 
-    Website selectSym(int id);
 
     /**
      * 新增一条记录
