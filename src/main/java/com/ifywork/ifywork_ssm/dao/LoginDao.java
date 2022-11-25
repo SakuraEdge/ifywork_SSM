@@ -10,13 +10,13 @@ import java.util.ArrayList;
 
 public interface LoginDao {
 
-    @Insert("insert into user(Number,name,password,tel,createTime) values(#{number},#{name},#{pwd},#{tel},#{time})")
+    @Insert("insert into user(Number,name,password,tel,createTime) values(${number},${name},${pwd},${tel},${time})")
     void register(People people);
 
-    @Select("select * from user where name= #{name} and password= #{pwd}")
+    @Select("select * from user where name= ${name} and password= ${pwd}")
     ArrayList<String> login(People people);
 
-    @Update("update isdb set value= #{name} where type = 'isLogin'")
+    @Update("update isdb set value= ${name} where type = 'isLogin'")
     void setName(String name);
 
 }

@@ -38,7 +38,8 @@
     <!-- 映射文件路径，将mapper文件加入到配置文件中 -->
     <mappers>
         <mapper class="com.ifywork.ifywork_ssm.dao.LoginDao"/>
-        <mapper class="com.ifywork.ifywork_ssm.dao.SymDao"/>
         <mapper class="com.ifywork.ifywork_ssm.dao.HomeDao"/>
+        <mapper class="com.ifywork.ifywork_ssm.dao.PaperDao"/>
+        <mapper class="com.ifywork.ifywork_ssm.dao.ResetDao"/>
     </mappers>
 </configuration>
