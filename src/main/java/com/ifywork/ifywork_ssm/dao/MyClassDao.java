@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface MyClassDao {
-    @Insert("insert into class(classname,classname,maxNum,address,createTime)  values('#{classname}','#{classname}','#{maxNum}','#{address}','#{createTime}')")
+    @Insert("insert into class(classname,maxNum,address,createTime)  values('#{classname}','#{maxNum}','#{address}','#{createTime}')")
     void insertMyClass(MyClass myClass);
 
     @Select("select * from class where name= '${teacherID}'")

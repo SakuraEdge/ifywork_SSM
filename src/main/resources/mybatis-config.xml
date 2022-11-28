@@ -23,7 +23,7 @@
             <!-- 使用JDBC的事务管理 -->
             <transactionManager type="JDBC"/>
             <!-- 数据源 type="POOLED"表示使用连接池 -->
-            <dataSource type="POOLED">
+            <dataSource type="com.ifywork.ifywork_ssm.C3p0DataSource">
                 <!-- MySQL数据库驱动 -->
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
                 <!-- 连接数据库的URL -->
