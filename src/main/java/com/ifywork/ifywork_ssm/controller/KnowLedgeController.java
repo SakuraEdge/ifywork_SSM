@@ -2,9 +2,9 @@ package com.ifywork.ifywork_ssm.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.ifywork.ifywork_ssm.bean.Tag;
+import com.ifywork.ifywork_ssm.bean.Knowledge;
 import com.ifywork.ifywork_ssm.dao.HomeDao;
-import com.ifywork.ifywork_ssm.dao.PaperDao;
+import com.ifywork.ifywork_ssm.dao.KnowLedgeDao;
 import com.ifywork.ifywork_ssm.dao.TagDao;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -17,16 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.List;
 
 @ComponentScan
 @Controller
-public class TagController {
-    @RequestMapping("/TagAddServlet")
-    public void TagAdd(HttpServletRequest request, HttpServletResponse response) throws Exception {
+public class KnowLedgeController {
+    @RequestMapping("/KLAddServlet")
+    public void KLAdd(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //设置传值的编码
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
@@ -44,26 +42,26 @@ public class TagController {
             sb.append(buf,0,len);
         }
         String str = sb.toString();
-        JSONObject jsonObject = JSONObject.parseObject(str);
+        JSONObject json = JSONObject.parseObject(str);
+        String knowledge = json.getString("knowledge");
 
-        String tag = jsonObject.getString("tag");
         HomeDao homeDao = sqlSession.getMapper(HomeDao.class);
         String createPerson = homeDao.isLogin();
-        Tag tags = new Tag(tag,createPerson);
 
+        Knowledge knowledges = new Knowledge(knowledge,createPerson);
 
-        TagDao tagDao = sqlSession.getMapper(TagDao.class);
-        List<String> list = tagDao.oneTag(tag);
+        KnowLedgeDao knowLedgeDao = sqlSession.getMapper(KnowLedgeDao.class);
+        List<String> list = knowLedgeDao.oneKnowledge(knowledge);
         if (list.size()==0){
-            tagDao.insertTag(tags);
+            knowLedgeDao.insertKnowledge(knowledges);
             response.getWriter().println("添加成功！");
         }
         else {
-            response.getWriter().println("该标签已存在！");
+            response.getWriter().println("该知识点已存在！");
         }
     }
 
-    @RequestMapping("/SelectTagServlet")
+    @RequestMapping("/SelectKLServlet")
     public void SelectTag(HttpServletResponse response) throws Exception {
         //设置传值的编码
         response.setContentType("text/html;charset=UTF-8");
@@ -72,11 +70,11 @@ public class TagController {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(readers);
         SqlSession sqlSession = sqlSessionFactory.openSession(true);
 
-        TagDao tagDao = sqlSession.getMapper(TagDao.class);
-        response.getWriter().println(JSON.toJSONString(tagDao.selectTag()));
+        KnowLedgeDao knowLedgeDao = sqlSession.getMapper(KnowLedgeDao.class);
+        response.getWriter().println(JSON.toJSONString(knowLedgeDao.selectKnowledge()));
     }
 
-    @RequestMapping("/DeleteTagServlet")
+    @RequestMapping("/DeleteKLServlet")
     public void DeleteTag(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //设置传值的编码
         response.setContentType("text/html;charset=UTF-8");
@@ -96,10 +94,18 @@ public class TagController {
         }
         String str = sb.toString();
         JSONObject jsonObject = JSONObject.parseObject(str);
-        String tag = jsonObject.getString("tag");
+        String knowledge = jsonObject.getString("knowledge");
 
-        TagDao tagDao = sqlSession.getMapper(TagDao.class);
-        tagDao.deleteTag(tag);
-        response.getWriter().println("删除成功!");
+        KnowLedgeDao knowLedgeDao = sqlSession.getMapper(KnowLedgeDao.class);
+        List<String> list = knowLedgeDao.onPaper(knowledge);
+        if (list.size()==0){
+            knowLedgeDao.deleteKnowledge(knowledge);
+            response.getWriter().println("删除成功!");
+        }
+        else {
+            response.getWriter().println("该知识点下存在试题，无法删除！");
+        }
+
     }
+
 }
