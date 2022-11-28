@@ -8,9 +8,9 @@ public class Tag {
     private String createPerson;
     private String time;
 
-    public Tag(String name) {
+    public Tag(String name,String createPerson) {
         this.name = name;
-        this.createPerson = "System";
+        this.createPerson = createPerson;
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
         this.time = formatter.format(date);

@@ -3,6 +3,7 @@ package com.ifywork.ifywork_ssm.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ifywork.ifywork_ssm.bean.Tag;
+import com.ifywork.ifywork_ssm.dao.HomeDao;
 import com.ifywork.ifywork_ssm.dao.PaperDao;
 import com.ifywork.ifywork_ssm.dao.TagDao;
 import org.apache.ibatis.io.Resources;
@@ -42,7 +43,9 @@ public class TagController {
         JSONObject jsonObject = JSONObject.parseObject(str);
 
         String tag = jsonObject.getString("tag");
-        Tag tags = new Tag(tag);
+        HomeDao homeDao = sqlSession.getMapper(HomeDao.class);
+        String createPerson = homeDao.isLogin();
+        Tag tags = new Tag(tag,createPerson);
 
 
         TagDao tagDao = sqlSession.getMapper(TagDao.class);
