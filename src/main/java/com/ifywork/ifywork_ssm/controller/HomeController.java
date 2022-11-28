@@ -34,6 +34,8 @@ public class HomeController {
         HomeDao homeDao = sqlSession.getMapper(HomeDao.class);
         name = homeDao.isLogin();
         response.getWriter().println(name);
+
+        sqlSession.close();
     }
 
     @RequestMapping("/InfoServlet")
@@ -64,6 +66,8 @@ public class HomeController {
         HomeDao homeDao = sqlSession.getMapper(HomeDao.class);
         map = homeDao.selectInfo(name);
         response.getWriter().println(JSON.toJSONString(map));
+
+        sqlSession.close();
     }
 
 

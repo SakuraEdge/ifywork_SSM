@@ -6,6 +6,7 @@ import com.ifywork.ifywork_ssm.bean.MyClass;
 import com.ifywork.ifywork_ssm.bean.People;
 import com.ifywork.ifywork_ssm.bean.ReplaceTRN;
 import com.ifywork.ifywork_ssm.dao.HomeDao;
+import com.ifywork.ifywork_ssm.dao.LoginDao;
 import com.ifywork.ifywork_ssm.dao.MyClassDao;
 import com.ifywork.ifywork_ssm.dao.PaperDao;
 import org.apache.ibatis.io.Resources;
@@ -63,6 +64,8 @@ public class MyClassController {
         MyClassDao myClassDao = sqlSession.getMapper(MyClassDao.class);
         myClassDao.insertMyClass(myClass);
         myClassDao.createClassTableOfStudent(className);
+
+        sqlSession.close();
     }
 
     @RequestMapping("/SelectMyClass")
@@ -93,6 +96,8 @@ public class MyClassController {
         MyClassDao myClassDao = sqlSession.getMapper(MyClassDao.class);
         list = myClassDao.selectClassByTeacherID(teacherName);
         response.getWriter().println(JSON.toJSONString(list));
+
+        sqlSession.close();
     }
 
     @RequestMapping("/DeleteClass")
@@ -121,6 +126,8 @@ public class MyClassController {
         myClassDao.dropClassTable(classname);
         myClassDao.deleteClass(classname);
         response.getWriter().println("删除成功!");
+
+        sqlSession.close();
     }
 
     @RequestMapping("/SelectStudent")
@@ -159,37 +166,85 @@ public class MyClassController {
         }
 
         response.getWriter().println(JSON.toJSONString(map));
+
+        sqlSession.close();
     }
 
-//    @RequestMapping("/StudentAdd")
-//    public void insertStudentToClass(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//        //设置传值的编码
-//        response.setContentType("text/html;charset=UTF-8");
-//        request.setCharacterEncoding("utf-8");
-//        Reader readers = Resources.getResourceAsReader("mybatis-config.xml");
-//        //初始化SqlSessionFactory对象，同事解析mybatis-config.xml文件
-//        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(readers);
-//        SqlSession sqlSession = sqlSessionFactory.openSession(true);
-//
-//        //数据流获取信息
-//        StringBuilder sb = new StringBuilder();
-//        BufferedReader reader = request.getReader();
-//        char[] buf = new char[1024];
-//        int len;
-//        while ((len = reader.read(buf)) != -1){
-//            sb.append(buf,0,len);
-//        }
-//        String str = sb.toString();
-//        JSONObject jsonObject = JSONObject.parseObject(str);
-//
-//        String classname = jsonObject.getString("classname");
-//        classname = ReplaceTRN.replaceTRN_Instance.get(classname);
-//
-//        List<People> list;
-//        MyClassDao myClassDao = sqlSession.getMapper(MyClassDao.class);
-//
-//
-//
-//        response.getWriter().println(JSON.toJSONString("添加成功"));
-//    }
+    @RequestMapping("/StudentAdd")
+    public void insertStudentToClass(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        //设置传值的编码
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        Reader readers = Resources.getResourceAsReader("mybatis-config.xml");
+        //初始化SqlSessionFactory对象，同事解析mybatis-config.xml文件
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(readers);
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+
+        //数据流获取信息
+        StringBuilder sb = new StringBuilder();
+        BufferedReader reader = request.getReader();
+        char[] buf = new char[1024];
+        int len;
+        while ((len = reader.read(buf)) != -1){
+            sb.append(buf,0,len);
+        }
+        String str = sb.toString();
+        JSONObject jsonObject = JSONObject.parseObject(str);
+
+        String classname = jsonObject.getString("classname");
+        classname = ReplaceTRN.replaceTRN_Instance.get(classname);
+
+        String studentID = jsonObject.getString("studentid");
+        studentID = ReplaceTRN.replaceTRN_Instance.get(studentID);
+
+        LoginDao loginDao = sqlSession.getMapper(LoginDao.class);
+        String name = loginDao.selectUser(studentID).getName();
+
+        MyClassDao myClassDao = sqlSession.getMapper(MyClassDao.class);
+
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        String createTime = formatter.format(date);
+
+        myClassDao.insertStudentToClass(classname,name,studentID,createTime);
+
+        response.getWriter().println(JSON.toJSONString("添加成功"));
+
+        sqlSession.close();
+    }
+
+    @RequestMapping("/DeleteStudent")
+    public void deleteStudentFromClass(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        //设置传值的编码
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        Reader readers = Resources.getResourceAsReader("mybatis-config.xml");
+        //初始化SqlSessionFactory对象，同事解析mybatis-config.xml文件
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(readers);
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+
+        //数据流获取信息
+        StringBuilder sb = new StringBuilder();
+        BufferedReader reader = request.getReader();
+        char[] buf = new char[1024];
+        int len;
+        while ((len = reader.read(buf)) != -1){
+            sb.append(buf,0,len);
+        }
+        String str = sb.toString();
+        JSONObject jsonObject = JSONObject.parseObject(str);
+
+        String classname = jsonObject.getString("classname");
+        classname = ReplaceTRN.replaceTRN_Instance.get(classname);
+
+        String studentID = jsonObject.getString("id");
+        studentID = ReplaceTRN.replaceTRN_Instance.get(studentID);
+
+        MyClassDao myClassDao = sqlSession.getMapper(MyClassDao.class);
+        myClassDao.deleteStudentFormClass(classname,studentID);
+
+        response.getWriter().println(JSON.toJSONString("删除成功！"));
+
+        sqlSession.close();
+    }
 }

@@ -62,6 +62,8 @@ public class PaperController {
         else {
             response.getWriter().println("该试题已存在！");
         }
+
+        sqlSession.close();
     }
 
     @RequestMapping("/DeletePaperServlet")
@@ -89,6 +91,8 @@ public class PaperController {
         PaperDao paperDao = sqlSession.getMapper(PaperDao.class);
         paperDao.deletePaper(paper);
         response.getWriter().println("删除成功!");
+
+        sqlSession.close();
     }
 
     @RequestMapping("/SelectPaperNameServlet")
@@ -118,6 +122,8 @@ public class PaperController {
         PaperDao paperDao = sqlSession.getMapper(PaperDao.class);
         tags = paperDao.selectPaperName(knowledge);
         response.getWriter().println(JSON.toJSONString(tags));
+
+        sqlSession.close();
     }
 
     @RequestMapping("/SelectPaperServlet")
@@ -147,6 +153,7 @@ public class PaperController {
         PaperDao paperDao = sqlSession.getMapper(PaperDao.class);
         list = paperDao.selectPaper(papername);
 
-        System.out.println(list);
+        response.getWriter().println(JSON.toJSONString(list));
+        sqlSession.close();
     }
 }

@@ -19,4 +19,6 @@ public interface LoginDao {
     @Update("update isdb set value= '${name}' where type = 'isLogin'")
     void setName(String name);
 
+    @Select("select * from user where Number='${ID}'")
+    People selectUser(String ID);
 }

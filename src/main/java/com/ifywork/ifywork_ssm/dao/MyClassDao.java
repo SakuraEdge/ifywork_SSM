@@ -27,6 +27,9 @@ public interface MyClassDao {
     void insertStudentToClass(@Param("className")String className,@Param("studentName")String studentName,
                               @Param("studentID")String studentID,@Param("createTime") String createTime);
 
+    @Delete("delete from student_${className} where Number='${studentID}'")
+    void deleteStudentFormClass(@Param("className")String className, @Param("studentID")String studentID);
+
     @Update("create table if not exists Student_${name} (" +
             "id int not null primary key auto_increment," +
             "Number varchar(50)," +

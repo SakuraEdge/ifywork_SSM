@@ -10,6 +10,8 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,8 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
+@ComponentScan
+@Controller
 public class TagController {
     @RequestMapping("/TagAddServlet")
     public void TagAdd(HttpServletRequest request, HttpServletResponse response) throws Exception {
