@@ -6,7 +6,7 @@ import java.util.Map;
 
 public interface HomeDao {
 
-    @Select("select * from user where name= ${name}")
+    @Select("select * from user where name= '${name}'")
     Map<String,String> selectInfo(String name);
 
     @Select("select value from isdb where type = 'isLogin'")

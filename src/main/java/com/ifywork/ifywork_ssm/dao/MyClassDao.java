@@ -12,17 +12,17 @@ import java.util.Date;
 import java.util.List;
 
 public interface MyClassDao {
-    @Insert("insert into class(classname,classname,maxNum,address,createTime)  values(#{classname},#{classname},#{maxNum},#{address},#{createTime})")
+    @Insert("insert into class(classname,classname,maxNum,address,createTime)  values('#{classname}','#{classname}','#{maxNum}','#{address}','#{createTime}')")
     void insertMyClass(MyClass myClass);
 
-    @Select("select * from class where name= ${teacherID}")
+    @Select("select * from class where name= '${teacherID}'")
     List<MyClass> selectClassByTeacherID(String teacherID);
 
-    @Select("select * from Student_${className} where number=${studentID}")
+    @Select("select * from 'Student_${className}' where number='${studentID}'")
     void selectStudentFromClass(@Param("className")String className, @Param("studentID")String studentID);
 
     @Insert("INSERT INTO student_${className}(Number,name,createPerson,createTime) " +
-            "VALUES(${studentID},'${studentName}','system','${createTime}')")
+            "VALUES('${studentID}','${studentName}','system','${createTime}')")
     void insertStudentToClass(@Param("className")String className,@Param("studentName")String studentName,
                               @Param("studentID")String studentID,@Param("createTime") String createTime);
 

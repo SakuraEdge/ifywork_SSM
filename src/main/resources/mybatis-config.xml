@@ -42,5 +42,6 @@
         <mapper class="com.ifywork.ifywork_ssm.dao.PaperDao"/>
         <mapper class="com.ifywork.ifywork_ssm.dao.ResetDao"/>
         <mapper class="com.ifywork.ifywork_ssm.dao.MyClassDao"/>
+        <mapper class="com.ifywork.ifywork_ssm.dao.TagDao"/>
     </mappers>
 </configuration>
