@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @ComponentScan
 @Controller
 public class ResetController {
-    @RequestMapping("/ResetPwdServlet")
+    @RequestMapping("/ResetPwd")
     public void ResetPwd(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //设置传值的编码
         response.setContentType("text/html;charset=UTF-8");
@@ -58,5 +58,7 @@ public class ResetController {
         else {
             response.getWriter().println("旧密码错误");
         }
+
+        sqlSession.close();
     }
 }

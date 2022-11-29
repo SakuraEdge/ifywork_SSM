@@ -3,6 +3,7 @@ package com.ifywork.ifywork_ssm.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ifywork.ifywork_ssm.bean.Paper;
+import com.ifywork.ifywork_ssm.bean.ReplaceTRN;
 import com.ifywork.ifywork_ssm.dao.LoginDao;
 import com.ifywork.ifywork_ssm.dao.PaperDao;
 import org.apache.ibatis.io.Resources;
@@ -18,13 +19,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @ComponentScan
 @Controller
 public class PaperController {
 
-    @RequestMapping("/PaperAddServlet")
+    @RequestMapping("/AddPaper")
     public void PaperAdd(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //设置传值的编码
         response.setContentType("text/html;charset=UTF-8");
@@ -66,7 +68,7 @@ public class PaperController {
         sqlSession.close();
     }
 
-    @RequestMapping("/DeletePaperServlet")
+    @RequestMapping("/DeletePaper")
     public void PaperDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //设置传值的编码
         response.setContentType("text/html;charset=UTF-8");
@@ -88,6 +90,7 @@ public class PaperController {
         JSONObject jsonObject = JSONObject.parseObject(str);
 
         String paper = jsonObject.getString("paper");
+        paper = ReplaceTRN.replaceTRN_Instance.get(paper);
         PaperDao paperDao = sqlSession.getMapper(PaperDao.class);
         paperDao.deletePaper(paper);
         response.getWriter().println("删除成功!");
@@ -95,7 +98,7 @@ public class PaperController {
         sqlSession.close();
     }
 
-    @RequestMapping("/SelectPaperNameServlet")
+    @RequestMapping("/SelectPaperName")
     public void SelectPaperName(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //设置传值的编码
         response.setContentType("text/html;charset=UTF-8");
@@ -126,7 +129,7 @@ public class PaperController {
         sqlSession.close();
     }
 
-    @RequestMapping("/SelectPaperServlet")
+    @RequestMapping("/SelectPaper")
     public void SelectPaper(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //设置传值的编码
         response.setContentType("text/html;charset=UTF-8");
@@ -149,9 +152,12 @@ public class PaperController {
 
         String papername = jsonObject.getString("papername");
 
-        List<String> list;
+
         PaperDao paperDao = sqlSession.getMapper(PaperDao.class);
-        list = paperDao.selectPaper(papername);
+        Paper paper = paperDao.selectPaper(papername);
+        List<String> list = new ArrayList<>();
+        list.add(paper.getName());
+        list.add(paper.getA()+"|"+paper.getB()+"|"+paper.getC()+"|"+paper.getD()+"|"+paper.getReala());
 
         response.getWriter().println(JSON.toJSONString(list));
         sqlSession.close();

@@ -24,7 +24,7 @@ import java.util.Random;
 @Controller
 public class LoginController {
 
-    @RequestMapping("/RegServlet")
+    @RequestMapping("/Register")
     public void Reg(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         //设置传值的编码
@@ -71,9 +71,11 @@ public class LoginController {
 
             response.getWriter().println("注册成功！你的唯一用户ID为：" + num);
         }
+
+        sqlSession.close();
     }
 
-    @RequestMapping("/LoginServlet")
+    @RequestMapping("/Login")
     public void Login(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         //设置传值的编码
@@ -107,9 +109,11 @@ public class LoginController {
         else {
             response.getWriter().println("false");
         }
+
+        sqlSession.close();
     }
 
-    @RequestMapping("/SetNameServlet")
+    @RequestMapping("/SetName")
     public void SetName(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         //设置传值的编码
@@ -136,6 +140,7 @@ public class LoginController {
         loginDao.setName(name);
         response.getWriter().println(name);
 
+        sqlSession.close();
     }
 
 }

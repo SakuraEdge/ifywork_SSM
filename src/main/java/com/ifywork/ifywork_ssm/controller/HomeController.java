@@ -21,7 +21,7 @@ import java.util.Map;
 @Controller
 public class HomeController {
 
-    @RequestMapping("/IsLoginServlet")
+    @RequestMapping("/IsLogin")
     public void IsLogin(HttpServletResponse response) throws Exception{
         //设置传值的编码
         response.setContentType("text/html;charset=UTF-8");
@@ -38,7 +38,7 @@ public class HomeController {
         sqlSession.close();
     }
 
-    @RequestMapping("/InfoServlet")
+    @RequestMapping("/Info")
     public void Info(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //设置传值的编码
         response.setContentType("text/html;charset=UTF-8");

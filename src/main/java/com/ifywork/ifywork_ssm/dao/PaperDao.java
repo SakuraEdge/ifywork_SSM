@@ -17,11 +17,11 @@ public interface PaperDao {
     @Delete("delete from paper where name = '${paper}'")
     void deletePaper(String paper);
 
-    @Select("select * from paper where knowledge = '${paper}'")
+    @Select("select name from paper where knowledge = '${paper}'")
     ArrayList<String> selectPaperName(String knowledge);
 
-    @Select("select * from paper where name= ${papername}")
-    List<String> selectPaper(String papername);
+    @Select("select * from paper where name= '${papername}'")
+    Paper selectPaper(String papername);
 
 
 }

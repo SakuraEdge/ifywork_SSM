@@ -1,7 +1,11 @@
 package com.ifywork.ifywork_ssm.bean;
 
+import com.alibaba.fastjson.JSON;
+
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Paper {
     private String name;
@@ -89,14 +93,9 @@ public class Paper {
 
     @Override
     public String toString() {
-        return "Paper{" +
-                "name='" + name + '\'' +
-                ", a='" + a + '\'' +
-                ", b='" + b + '\'' +
-                ", c='" + c + '\'' +
-                ", d='" + d + '\'' +
-                ", reala='" + reala + '\'' +
-                ", knowledge='" + knowledge + '\'' +
-                '}';
+        List<String> list = new ArrayList<>();
+        list.add(name);
+        list.add(a+"|"+b+"|"+c+"|"+d+"|"+reala);
+        return JSON.toJSONString(list);
     }
 }
