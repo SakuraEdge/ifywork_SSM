@@ -59,7 +59,7 @@ public class TagController {
             response.getWriter().println("添加成功！");
         }
         else {
-            response.getWriter().println("该知识点已存在！");
+            response.getWriter().println("该标签已存在！");
         }
 
         sqlSession.close();
