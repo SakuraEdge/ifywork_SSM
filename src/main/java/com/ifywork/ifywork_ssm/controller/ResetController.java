@@ -55,7 +55,7 @@ public class ResetController {
         LoginDao loginDao = sqlSession.getMapper(LoginDao.class);
         ResetDao resetDao = sqlSession.getMapper(ResetDao.class);
         People peo = new People(id,null,old_pwd,null,null);
-        ArrayList<String> list = loginDao.login(peo);
+        ArrayList<String> list = loginDao.relogin(peo);
         System.out.println(list.size());
         if (list.size()!=0){
             resetDao.updatePwd(id,new_pwd);
